@@ -11,10 +11,11 @@ public:
 	void Draw();
 	void Move( SDL_Event* moveEvent );
 
-	void PlayAnimation( int beginFrame, int endFrame, int row, float speed );
+	void PlayAnimation(int beginFrame, int endFrame, int row, float speed);
+	void SetUpAnimation(int passedAmointX, int passedAmmountY);
 
 private:
-	CMyPoint NextStep( CMyPoint first, CMyPoint second, double speed );
+	void PrepereToMove();
 	SDL_Texture*  m_image; ///< sdf
 	SDL_Rect      m_rect;  ///< sdkjhfsd
 	SDL_Rect      m_crop;
@@ -34,6 +35,10 @@ private:
 
 	int m_imgWidth;
 	int m_imgHeight;
+	int m_currentFrame;
+	int m_animDelay;
+	int m_amountFrameX;
+	int m_amountFrameY;
 
 	unsigned long m_ulStartMove;
 	unsigned long m_ulStopMove;

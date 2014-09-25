@@ -11,7 +11,11 @@ CSprite::CSprite( SDL_Renderer* renderer, char* url, int x, int y, int w, int h 
 																					m_mousePos( 0., 0. ),
 																					m_bobPos( 0., 0. ),
 																					m_iDistance( 0 ),
-																					m_bIsMoving( false )
+																					m_bIsMoving( false ),
+																					m_currentFrame( 0 ),
+																					m_animDelay( 0 ),
+																					m_amountFrameX( 0 ),
+																					m_amountFrameY( 0 )
 {
 	this->m_renderer = renderer;
 
@@ -46,8 +50,6 @@ void CSprite::Draw()
 
 void CSprite::Move( SDL_Event* moveEvent )
 {
-
-
 	if( moveEvent->type == SDL_MOUSEBUTTONDOWN )
 	{
 		SDL_GetMouseState( &m_mouseX, &m_mouseY );
@@ -55,6 +57,7 @@ void CSprite::Move( SDL_Event* moveEvent )
 		m_oldPos.Set( m_rect.x, m_rect.y );
 		m_newPos.Set( m_mousePos );
 		m_bIsMoving = true;
+		PrepereToMove();
 	}
 
 	if( m_bIsMoving )
@@ -62,11 +65,10 @@ void CSprite::Move( SDL_Event* moveEvent )
 		if( ( m_rect.x == m_newPos.GetX() )
 			&& ( m_rect.y == m_newPos.GetY() ) )
 		{
+			m_bIsMoving = false;
 			return;
 		}
 
-		Uint32 czas = SDL_GetTicks();
-		czas = czas;
 		CMyPoint sspTemp;
 		float    fFraction = /*EasingQuadAndInv( */ CalculateProgress( m_ulStartMove, m_ulStopMove, SDL_GetTicks() ) /*)*/;
 
@@ -83,35 +85,45 @@ void CSprite::Move( SDL_Event* moveEvent )
 			sspTemp = CalculatePoint( m_oldPos, m_newPos, fFraction );
 		}
 
-		m_rect.x += sspTemp.GetX();
-		m_rect.y += sspTemp.GetY();
+		m_rect.x = sspTemp.GetX();
+		m_rect.y = sspTemp.GetY();
 	}
-
 }
 
 void CSprite::PlayAnimation( int beginFrame, int endFrame, int row, float speed )
 {
-	m_crop.x = m_imgWidth / 4;
-	m_crop.w = m_imgWidth / 4;
-	m_crop.h = m_imgHeight / 4;
+	if( ( m_animDelay + speed ) > SDL_GetTicks() )
+	{
+		return;
+	}
+
+	if( endFrame <= m_currentFrame )
+	{
+		m_currentFrame = beginFrame;
+	}
+	else
+	{
+		m_currentFrame++;
+	}
+
+	m_crop.x = m_currentFrame * ( m_imgWidth / m_amountFrameX );
+	m_crop.y = row * ( m_imgHeight / m_amountFrameY );
+	m_crop.w = m_imgWidth / m_amountFrameX;
+	m_crop.h = m_imgHeight / m_amountFrameY;
+
+	m_animDelay = SDL_GetTicks();
 }
 
-CMyPoint CSprite::NextStep( CMyPoint first, CMyPoint second, double speed )
+void CSprite::PrepereToMove()
 {
-	double wholeDistance = 0.0;
+	m_ulStartMove = SDL_GetTicks();
+	m_ulStopMove  = m_ulStartMove + 2500;
+}
 
-	wholeDistance = sqrt( ( first.GetX() - second.GetX() ) * ( first.GetX() - second.GetX() ) + ( first.GetY() - second.GetY() ) * ( first.GetY() - second.GetY() ) );
-
-	CMyPoint nextPoint( 0., 0. );
-
-	//nextPoint = ( ( CMyPoint::MyPointPOW( second - first ) ) / wholeDistance ) * speed;
-	//int i = first.GetX() * ( 1 - speed ) + speed * second.GetX();
-	nextPoint.SetX( first.GetX() * ( 1 - speed ) + speed * second.GetX() );
-	nextPoint.SetY( first.GetY() * ( 1 - speed ) + speed * second.GetY() );
-
-	CMyPoint retPoint = nextPoint - first;
-
-	return nextPoint;
+void CSprite::SetUpAnimation( int passedAmountX, int passedAmountY )
+{
+	m_amountFrameX = passedAmountX;
+	m_amountFrameY = passedAmountY;
 }
 
 float CalculateProgress( unsigned int uiStartTime, unsigned int uiEndTime, unsigned int uiTimeToken )
@@ -131,10 +143,11 @@ float CalculateProgress( unsigned int uiStartTime, unsigned int uiEndTime, unsig
 }
 
 /*
-   float EasingQuadAndInv( float fTime )
-   {
-    return CalcFun( EasingQuad, EasingQuadInv, fTime );
-   }*/
+float EasingQuadAndInv( float fTime )
+{
+	return CalcFun( EasingQuad, EasingQuadInv, fTime );
+}*/
+
 float EasingQuad( float fTime )
 {
 	if( fTime < 0.0f )

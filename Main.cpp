@@ -10,6 +10,7 @@ CMain::CMain( int screenWidth, int screenHigh ) : m_isQuit( false ),
 	csdl_setup = new CSDL_Setup( &m_isQuit, screenWidth, screenHigh );
 	grass = new CSprite( csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, WINDOW_WIDTH, WINDOW_HIGHT );
 	bob = new CSprite( csdl_setup->GetRenderer(), "data/tom.png", 250, 100, 50, 80 );
+	bob->SetUpAnimation( 4, 4 );
 
 	timeCheck = SDL_GetTicks();
 }
@@ -30,9 +31,11 @@ void CMain::GameLoop()
 		grass->Draw();
 		bob->Draw();
 
-		bob->PlayAnimation( 0, 0, 0, 0.f );
+		int angle 
 
-		if( timeCheck + 500 < SDL_GetTicks() )
+		bob->PlayAnimation( 0, 3, 1, 150 );
+
+		if( timeCheck + 50 < SDL_GetTicks() )
 		{
 			bob->Move( csdl_setup->GetEvent() );
 
