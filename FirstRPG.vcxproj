@@ -42,9 +42,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\include;C:\Biblioteki\SDL\SDL2_image-2.0.0\include;C:\Biblioteki\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2_image-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\include;C:\Biblioteki\SDL\SDL2_image-2.0.0\include;C:\Biblioteki\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2_image-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -53,13 +57,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Biblioteki\SDL\SDL2-2.0.3\include;C:\Biblioteki\SDL\SDL2_image-2.0.0\include;C:\Biblioteki\SDL\SDL2_mixer-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\include;C:\Biblioteki\SDL\SDL2_image-2.0.0\include;C:\Biblioteki\SDL\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Biblioteki\SDL\SDL2-2.0.3\lib\x86;C:\Biblioteki\SDL\SDL2_mixer-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2_image-2.0.0\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2_image-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,12 +75,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\include;C:\Biblioteki\SDL\SDL2_image-2.0.0\include;C:\Biblioteki\SDL\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Biblioteki\SDL\SDL2_mixer-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2_image-2.0.0\lib\x86;C:\Biblioteki\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
